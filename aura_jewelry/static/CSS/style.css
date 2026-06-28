@@ -1,0 +1,471 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+/* --- Root Theme Configuration --- */
+:root {
+    --primary-gold: #D4AF37;
+    --luxury-pink: #FFF0F2;      /* Elegant soft pink hue for background textures */
+    --accent-rose: #E8B4B8;       /* Sophisticated muted rose gold for highlights */
+    --dark-charcoal: #111111;
+    --text-muted: #555555;
+    --border-light: #EFE6E7;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #FCF9F9; /* Subtle dynamic pinkish white canvas */
+    color: var(--dark-charcoal);
+    overflow-x: hidden;
+}
+
+/* --- Smooth Scroll Alignment --- */
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- Header & Navigation Bar --- */
+header {
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(232, 180, 184, 0.15); /* Soft pink tint shadow */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--luxury-pink);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+}
+
+.logo {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    letter-spacing: 5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--dark-charcoal);
+}
+
+.logo span {
+    color: var(--accent-rose);
+}
+
+.nav-menu button {
+    background: none;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-left: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--dark-charcoal);
+    transition: all 0.3s ease;
+    padding: 6px 10px;
+    border-radius: 2px;
+}
+
+.nav-menu button:hover, 
+.nav-menu button.active {
+    color: #ffffff;
+    background-color: var(--accent-rose);
+}
+
+/* --- Luxury Banner Section --- */
+.hero-banner {
+    position: relative;
+    height: 520px;
+    background: linear-gradient(rgba(44, 34, 35, 0.45), rgba(44, 34, 35, 0.45)), url('../images/banner.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.2);
+}
+
+.hero-content h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 56px;
+    letter-spacing: 7px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content p {
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--luxury-pink);
+}
+
+/* --- Products & Main Grid Layout --- */
+.store-container {
+    max-width: 1200px;
+    margin: 70px auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 60px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--dark-charcoal);
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background-color: var(--accent-rose);
+    margin: 18px auto 0;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 40px;
+}
+
+.product-card {
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(232, 180, 184, 0.05);
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(232, 180, 184, 0.25);
+    border-color: var(--accent-rose);
+}
+
+.product-img-box {
+    height: 340px;
+    background-color: var(--luxury-pink);
+    overflow: hidden;
+    position: relative;
+}
+
+.product-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover .product-img-box img {
+    transform: scale(1.08);
+}
+
+.product-details {
+    padding: 26px;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-details h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    margin-bottom: 8px;
+    letter-spacing: 1.5px;
+    color: var(--dark-charcoal);
+    font-weight: 600;
+}
+
+.product-details p {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+.product-price {
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--dark-charcoal);
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+.add-to-cart-btn {
+    background-color: var(--dark-charcoal);
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.add-to-cart-btn:hover {
+    background-color: var(--accent-rose);
+    color: #ffffff;
+}
+
+/* --- Info Sections (About & Contact Layouts) --- */
+.info-section {
+    padding: 80px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.info-section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    color: var(--dark-charcoal);
+    margin-bottom: 25px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.info-section p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.9;
+    max-width: 850px;
+    margin: 0 auto 40px auto;
+    font-weight: 300;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.contact-card {
+    background: #ffffff;
+    padding: 35px 25px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    box-shadow: 0 5px 20px rgba(232, 180, 184, 0.05);
+    transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+    border-color: var(--accent-rose);
+    background: var(--luxury-pink);
+}
+
+.contact-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--dark-charcoal);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.contact-card p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 400;
+}
+
+/* --- Sliding Cart Drawer UI --- */
+.checkout-modal {
+    position: fixed;
+    top: 0;
+    right: -450px;
+    width: 450px;
+    height: 100%;
+    background: #ffffff;
+    box-shadow: -15px 0 40px rgba(44, 34, 35, 0.08);
+    transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2000;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.checkout-modal.active {
+    right: 0;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--luxury-pink);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.modal-header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    letter-spacing: 1.5px;
+    color: var(--dark-charcoal);
+}
+
+.close-btn {
+    font-size: 32px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: var(--accent-rose);
+}
+
+.cart-items-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px dashed var(--border-light);
+}
+
+.cart-item h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: var(--dark-charcoal);
+    letter-spacing: 0.5px;
+}
+
+.checkout-summary {
+    border-top: 1px solid var(--luxury-pink);
+    padding-top: 30px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 19px;
+    margin-bottom: 25px;
+    color: var(--dark-charcoal);
+    letter-spacing: 0.5px;
+}
+
+.place-order-btn {
+    width: 100%;
+    background-color: var(--accent-rose);
+    color: white;
+    border: none;
+    padding: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.place-order-btn:hover {
+    background-color: var(--dark-charcoal);
+}
+
+/* --- Checkout Form Inputs System --- */
+.checkout-form-container {
+    border-top: 2px dashed var(--luxury-pink);
+    margin-top: 25px;
+    padding-top: 25px;
+    display: none;
+}
+
+.checkout-form-container h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+    color: var(--dark-charcoal);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--dark-charcoal);
+    margin-bottom: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-group input, 
+.form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border-light);
+    background-color: #FAFAFA;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--dark-charcoal);
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: var(--accent-rose);
+    background-color: #ffffff;
+    outline: none;
+    box-shadow: 0 0 8px rgba(232, 180, 184, 0.25);
+}
+
+.cod-badge {
+    background: var(--luxury-pink);
+    border: 1px solid var(--accent-rose);
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #82585C;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}

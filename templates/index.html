@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA | Premium Affordable Jewelry Store</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Smooth Scroll styling for About and Contact sections */
+        html {
+            scroll-behavior: smooth;
+        }
+        .info-section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .info-section h2 {
+            font-size: 2.5rem;
+            color: #111;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .info-section p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .contact-card {
+            background: #fbfbfb;
+            padding: 30px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .contact-card h3 {
+            font-size: 1.3rem;
+            color: #D4AF37;
+            margin-bottom: 10px;
+        }
+        .contact-card p {
+            font-size: 1rem;
+            color: #333;
+            margin: 0;
+        }
+
+        /* --- New Professional Checkout Form Layout Inside Drawer --- */
+        .checkout-form-container {
+            border-top: 2px dashed #eee;
+            margin-top: 15px;
+            padding-top: 15px;
+            display: none; /* Initially Hidden, triggers when items exist and secure clicked */
+        }
+        .checkout-form-container h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: #111;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #444;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #D4AF37;
+            outline: none;
+        }
+        .cod-badge {
+            background: #fdf8e6;
+            border: 1px solid #f1e0ad;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #665017;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        /* Style adjustments to make the drawer cleanly scrollable if long */
+        .checkout-modal {
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="filterCategory('all')" style="cursor: pointer;">Aura<span>.</span></div>
+            <nav class="nav-menu">
+                <button class="active" onclick="filterCategory('all', this)">All</button>
+                <button onclick="filterCategory('pendants', this)">Pendants</button>
+                <button onclick="filterCategory('rings', this)">Rings</button>
+                <button onclick="filterCategory('bracelets', this)">Bracelets</button>
+                <button onclick="filterCategory('earrings', this)">Earrings</button>
+                <button onclick="scrollToSection('about-section')">About Us</button>
+                <button onclick="scrollToSection('contact-section')">Contact</button>
+                <button onclick="toggleCart()" style="position: relative; font-weight: bold;">
+                    Bag (<span id="cart-count">0</span>)
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-banner">
+        <div class="hero-content">
+            <h1>The Aura Collection</h1>
+            <p>Timeless Craftsmanship For Every Occasion</p>
+        </div>
+    </section>
+
+    <main class="store-container" id="main-storefront">
+        
+        <div class="collection-block" id="pendants-section">
+            <h2 class="section-title">Pendants Collection</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendent1.jpg') }}" alt="Aura Solitaire Pendant"></div>
+                    <div class="product-details"><div><h3>Aura Solitaire Pendant</h3><p>Classic shimmering single diamond finish pendant with chain.</p></div><div><div class="product-price">Rs. 2,899</div><button class="add-to-cart-btn" onclick="addToCart('Aura Solitaire Pendant', 2899)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant2.jpg') }}" alt="Empress Ruby Drop Chain"></div>
+                    <div class="product-details"><div><h3>Empress Ruby Chain</h3><p>Stunning ruby core stone suspended on fine chain.</p></div><div><div class="product-price">Rs. 3,600</div><button class="add-to-cart-btn" onclick="addToCart('Empress Ruby Chain', 3600)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pandant3.jpg') }}" alt="Minimalist Golden Bar"></div>
+                    <div class="product-details"><div><h3>Minimalist Golden Bar</h3><p>Sleek layered geometric bar pendant with gold wash.</p></div><div><div class="product-price">Rs. 1,999</div><button class="add-to-cart-btn" onclick="addToCart('Minimalist Golden Bar', 1999)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant4.jpg') }}" alt="Vintage Emerald Cushion"></div>
+                    <div class="product-details"><div><h3>Vintage Emerald Cushion</h3><p>Royal cushion-cut green emerald piece with zircon borders.</p></div><div><div class="product-price">Rs. 4,200</div><button class="add-to-cart-btn" onclick="addToCart('Vintage Emerald Cushion', 4200)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant5.jpg') }}" alt="Infinity Bond Pendant"></div>
+                    <div class="product-details"><div><h3>Infinity Bond Pendant</h3><p>Elegant infinity loop symbolic necklace for regular styling.</p></div><div><div class="product-price">Rs. 2,499</div><button class="add-to-cart-btn" onclick="addToCart('Infinity Bond Pendant', 2499)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant6.jpg') }}" alt="Sapphire Horizon Choker"></div>
+                    <div class="product-details"><div><h3>Sapphire Horizon Choker</h3><p>Deep ocean blue teardrop sapphire on elegant chain.</p></div><div><div class="product-price">Rs. 4,500</div><button class="add-to-cart-btn" onclick="addToCart('Sapphire Horizon Choker', 4500)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant7.jpg') }}" alt="Princess Hexagon Piece"></div>
+                    <div class="product-details"><div><h3>Princess Hexagon Piece</h3><p>Modern hexagon design holding reflective stone clusters.</p></div><div><div class="product-price">Rs. 3,100</div><button class="add-to-cart-btn" onclick="addToCart('Princess Hexagon Piece', 3100)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant8.jpg') }}" alt="Twisted Vine Botanical"></div>
+                    <div class="product-details"><div><h3>Twisted Vine Botanical</h3><p>Delicately crafted leaf vine details with a pearl base.</p></div><div><div class="product-price">Rs. 2,250</div><button class="add-to-cart-btn" onclick="addToCart('Twisted Vine Botanical', 2250)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant9.jpg') }}" alt="Modern Cushion Halo Charm"></div>
+                    <div class="product-details"><div><h3>Modern Cushion Halo</h3><p>Beautiful statement cushion cut zircon piece for heavy dress.</p></div><div><div class="product-price">Rs. 3,800</div><button class="add-to-cart-btn" onclick="addToCart('Modern Cushion Halo', 3800)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant10.jpg') }}" alt="Golden Sunburst Medallion"></div>
+                    <div class="product-details"><div><h3>Golden Sunburst Medallion</h3><p>Engraved premium metallic sunburst design for street look.</p></div><div><div class="product-price">Rs. 2,700</div><button class="add-to-cart-btn" onclick="addToCart('Golden Sunburst Medallion', 2700)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant11.jpg') }}" alt="Freshwater Pearl Drop"></div>
+                    <div class="product-details"><div><h3>Freshwater Pearl Drop</h3><p>Selected premium white freshwater pearl in gold wiring.</p></div><div><div class="product-price">Rs. 3,299</div><button class="add-to-cart-btn" onclick="addToCart('Freshwater Pearl Drop', 3299)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant12.jpg') }}" alt="Marquise Luxury Cascade"></div>
+                    <div class="product-details"><div><h3>Marquise Luxury Cascade</h3><p>High end marquise crystals cascading in artisan fashion.</p></div><div><div class="product-price">Rs. 4,999</div><button class="add-to-cart-btn" onclick="addToCart('Marquise Luxury Cascade', 4999)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant13.jpg') }}" alt="Aura Chevron Minimal"></div>
+                    <div class="product-details"><div><h3>Aura Chevron Minimal</h3><p>Trendy V-shaped geometric sleek layering chain.</p></div><div><div class="product-price">Rs. 1850</div><button class="add-to-cart-btn" onclick="addToCart('Aura Chevron Minimal', 1850)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant14.jpg') }}" alt="Celestial Half Moon"></div>
+                    <div class="product-details"><div><h3>Celestial Half Moon</h3><p>Delicate crescent moon layout detailed with crystals.</p></div><div><div class="product-price">Rs. 2150</div><button class="add-to-cart-btn" onclick="addToCart('Celestial Half Moon', 2150)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant15.jpg') }}" alt="Royal Crown Crest"></div>
+                    <div class="product-details"><div><h3>Royal Crown Crest</h3><p>Exquisite crown structure designed for party wear.</p></div><div><div class="product-price">Rs. 4100</div><button class="add-to-cart-btn" onclick="addToCart('Royal Crown Crest', 4100)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/pendant16.jpg') }}" alt="Ethereal Heartbeat Lock"></div>
+                    <div class="product-details"><div><h3>Ethereal Heartbeat Lock</h3><p>Heart line silhouette detailed with platinum polish.</p></div><div><div class="product-price">Rs. 2350</div><button class="add-to-cart-btn" onclick="addToCart('Ethereal Heartbeat Lock', 2350)">Add To Bag</button></div></div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="section-divider" style="border: 0; height: 1px; background: #eee; margin: 50px 0;">
+
+        <div class="collection-block" id="rings-section">
+            <h2 class="section-title">Rings Collection</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/ring1.jpg') }}" alt="Aura Solitaire Ring"></div>
+                    <div class="product-details"><div><h3>Aura Solitaire Ring</h3><p>Elegant daily wear silver solitaire ring.</p></div><div><div class="product-price">Rs. 2,499</div><button class="add-to-cart-btn" onclick="addToCart('Aura Solitaire Ring', 2499)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/ring2.jpg') }}" alt="Empress Ruby Ring"></div>
+                    <div class="product-details"><div><h3>Empress Ruby Ring</h3><p>Stunning ruby finish stone set in delicate silver wiring.</p></div><div><div class="product-price">Rs. 3,500</div><button class="add-to-cart-btn" onclick="addToCart('Empress Ruby Ring', 3500)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/ring3.jpg') }}" alt="Minimalist Rose Gold Band"></div>
+                    <div class="product-details"><div><h3>Minimalist Rose Gold Band</h3><p>Sleek and stackable lightweight daily band.</p></div><div><div class="product-price">Rs. 1,499</div><button class="add-to-cart-btn" onclick="addToCart('Minimalist Rose Gold Band', 1499)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/ring4.jpg') }}" alt="Vintage Emerald Halo Ring"></div>
+                    <div class="product-details"><div><h3>Vintage Emerald Halo Ring</h3><p>Beautiful green emerald crystal with a tiny stone halo.</p></div><div><div class="product-price">Rs. 3,999</div><button class="add-to-cart-btn" onclick="addToCart('Vintage Emerald Halo Ring', 3999)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/ring5.jpg') }}" alt="Infinity Eternal Band"></div>
+                    <div class="product-details"><div><h3>Infinity Eternal Band</h3><p>Continuous delicate rows of crystal zircons.</p></div><div><div class="product-price">Rs. 2,999</div><button class="add-to-cart-btn" onclick="addToCart('Infinity Eternal Band', 2999)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/ring6.jpg') }}" alt="Sapphire Royalty Ring"></div>
+                    <div class="product-details"><div><h3>Sapphire Royalty Ring</h3><p>Deep blue sapphire finish crystal for party wear.</p></div><div><div class="product-price">Rs. 4,200</div><button class="add-to-cart-btn" onclick="addToCart('Sapphire Royalty Ring', 4200)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/ring7.jpg') }}" alt="Princess Cut Glamour Ring"></div>
+                    <div class="product-details"><div><h3>Princess Cut Glamour Ring</h3><p>Bold square-cut central diamond zircon piece.</p></div><div><div class="product-price">Rs. 3,150</div><button class="add-to-cart-btn" onclick="addToCart('Princess Cut Glamour Ring', 3150)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/ring8.jpg') }}" alt="Twisted Vine Diamond Ring"></div>
+                    <div class="product-details"><div><h3>Twisted Vine Diamond Ring</h3><p>Delicate intertwining silver design with micro-stones.</p></div><div><div class="product-price">Rs. 1,850</div><button class="add-to-cart-btn" onclick="addToCart('Twisted Vine Diamond Ring', 1850)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/ring9.jpg') }}" alt="Modern Cushion Cut Ring"></div>
+                    <div class="product-details"><div><h3>Modern Cushion Cut Ring</h3><p>Contemporary cushion stone setting on platinum polish.</p></div><div><div class="product-price">Rs. 3,600</div><button class="add-to-cart-btn" onclick="addToCart('Modern Cushion Cut Ring', 3600)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/ring10.jpg') }}" alt="Golden Sunburst Signet Ring"></div>
+                    <div class="product-details"><div><h3>Golden Sunburst Signet Ring</h3><p>Solid gold plated classic signet statement ring.</p></div><div><div class="product-price">Rs. 2,200</div><button class="add-to-cart-btn" onclick="addToCart('Golden Sunburst Signet Ring', 2200)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/ring12.jpg') }}" alt="Floral Pearl Cluster Ring"></div>
+                    <div class="product-details"><div><h3>Floral Pearl Cluster Ring</h3><p>Freshwater pearl beautifully clustered with crystals.</p></div><div><div class="product-price">Rs. 1,950</div><button class="add-to-cart-btn" onclick="addToCart('Floral Pearl Cluster Ring', 1950)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/ring13.jpg') }}" alt="Marquise Statement Ring"></div>
+                    <div class="product-details"><div><h3>Marquise Statement Ring</h3><p>Eye-catching marquise cut luxury festive band.</p></div><div><div class="product-price">Rs. 4,500</div><button class="add-to-cart-btn" onclick="addToCart('Marquise Statement Ring', 4500)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/ring14.jpg') }}" alt="Aura Chevron Diamond Ring"></div>
+                    <div class="product-details"><div><h3>Aura Chevron Diamond Ring</h3><p>V-shaped beautiful sleek chevron thumb or finger ring.</p></div><div><div class="product-price">Rs. 1,650</div><button class="add-to-cart-btn" onclick="addToCart('Aura Chevron Diamond Ring', 1650)">Add To Bag</button></div></div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="section-divider" style="border: 0; height: 1px; background: #eee; margin: 50px 0;">
+
+        <div class="collection-block" id="bracelets-section">
+            <h2 class="section-title">Bracelets Collection</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/bracelet1.jpg') }}" alt="Aura Delicate Chain"></div>
+                    <div class="product-details"><div><h3>Aura Delicate Chain</h3><p>Sleek silver chain perfect for layering.</p></div><div><div class="product-price">Rs. 1,899</div><button class="add-to-cart-btn" onclick="addToCart('Aura Delicate Chain', 1899)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/bracelet2.jpg') }}" alt="Zircon Tennis Bracelet"></div>
+                    <div class="product-details"><div><h3>Zircon Tennis Bracelet</h3><p>Classic row of brilliant-cut shiny zircon crystals.</p></div><div><div class="product-price">Rs. 4,500</div><button class="add-to-cart-btn" onclick="addToCart('Zircon Tennis Bracelet', 4500)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/bracelet3.jpg') }}" alt="Minimalist Rose Gold Cuff"></div>
+                    <div class="product-details"><div><h3>Minimalist Rose Gold Cuff</h3><p>Modern and smooth adjustable rose gold wrist cuff.</p></div><div><div class="product-price">Rs. 2,200</div><button class="add-to-cart-btn" onclick="addToCart('Minimalist Rose Gold Cuff', 2200)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/bracelet4.jpg') }}" alt="Vintage Emerald Charm Bangle"></div>
+                    <div class="product-details"><div><h3>Vintage Emerald Charm Bangle</h3><p>Stunning green charm accent on a silver lock bangle.</p></div><div><div class="product-price">Rs. 3,800</div><button class="add-to-cart-btn" onclick="addToCart('Vintage Emerald Charm Bangle', 3800)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/bracelet5.jpg') }}" alt="Empress Golden Link"></div>
+                    <div class="product-details"><div><h3>Empress Golden Link</h3><p>Thick premium golden textures for festive statement looks.</p></div><div><div class="product-price">Rs. 2,999</div><button class="add-to-cart-btn" onclick="addToCart('Empress Golden Link', 2999)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/bracelet6.jpg') }}" alt="Infinity Love Crystal"></div>
+                    <div class="product-details"><div><h3>Infinity Love Crystal</h3><p>Beautiful intertwined infinity shape with micro stones.</p></div><div><div class="product-price">Rs. 2,400</div><button class="add-to-cart-btn" onclick="addToCart('Infinity Love Crystal', 2400)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/bracelet7.jpg') }}" alt="Floral Pearl Drop Bracelet"></div>
+                    <div class="product-details"><div><h3>Floral Pearl Drop Bracelet</h3><p>Delicate chain accented with beautiful white pearls.</p></div><div><div class="product-price">Rs. 2,650</div><button class="add-to-cart-btn" onclick="addToCart('Floral Pearl Drop Bracelet', 2650)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/bracelet8.jpg') }}" alt="Modern Geometric Line Bangle"></div>
+                    <div class="product-details"><div><h3>Modern Geometric Line Bangle</h3><p>Minimalist cutwork design for contemporary styling.</p></div><div><div class="product-price">Rs. 3,100</div><button class="add-to-cart-btn" onclick="addToCart('Modern Geometric Line Bangle', 3100)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/bracelet9.jpg') }}" alt="Twisted Silver Vine Bracelet"></div>
+                    <div class="product-details"><div><h3>Twisted Silver Vine Bracelet</h3><p>Nature-inspired textured silver daily wrist wear.</p></div><div><div class="product-price">Rs. 1,999</div><button class="add-to-cart-btn" onclick="addToCart('Twisted Silver Vine Bracelet', 1999)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/bracelet10.jpg') }}" alt="Royal Sapphire Accent Chain"></div>
+                    <div class="product-details"><div><h3>Royal Sapphire Accent Chain</h3><p>Gorgeous blue crystal gemstone centered on standard chain.</p></div><div><div class="product-price">Rs. 4,150</div><button class="add-to-cart-btn" onclick="addToCart('Royal Sapphire Accent Chain', 4150)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/bracelet11.jpg') }}" alt="Aura Sweetheart Charm Band"></div>
+                    <div class="product-details"><div><h3>Aura Sweetheart Charm Band</h3><p>Lovely hanging heart charm on an adjustable high-polish band.</p></div><div><div class="product-price">Rs. 1,750</div><button class="add-to-cart-btn" onclick="addToCart('Aura Sweetheart Charm Band', 1750)">Add To Bag</button></div></div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="section-divider" style="border: 0; height: 1px; background: #eee; margin: 50px 0;">
+
+        <div class="collection-block" id="earrings-section">
+            <h2 class="section-title">Earrings Collection</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing1.jpg') }}" alt="Aura Classic Studs"></div>
+                    <div class="product-details"><div><h3>Aura Classic Studs</h3><p>Minimalist crystal studs for daily casual outfit rotation.</p></div><div><div class="product-price">Rs. 1,250</div><button class="add-to-cart-btn" onclick="addToCart('Aura Classic Studs', 1250)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing2.jpg') }}" alt="Royal Drop Chandelier Pieces"></div>
+                    <div class="product-details"><div><h3>Royal Drop Chandelier</h3><p>Luxurious dangling stones for evening festive wear.</p></div><div><div class="product-price">Rs. 3,800</div><button class="add-to-cart-btn" onclick="addToCart('Royal Drop Chandelier', 3800)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing3.jpg') }}" alt="Sleek Silver Huggies"></div>
+                    <div class="product-details"><div><h3>Sleek Silver Huggies</h3><p>Comfortable premium silver hoops for effortless daily use.</p></div><div><div class="product-price">Rs. 1,499</div><button class="add-to-cart-btn" onclick="addToCart('Sleek Silver Huggies', 1499)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing4.jpg') }}" alt="Vintage Emerald Tassel Droppers"></div>
+                    <div class="product-details"><div><h3>Vintage Emerald Droppers</h3><p>Vibrant emerald green gems beautifully framed with zircons.</p></div><div><div class="product-price">Rs. 3,400</div><button class="add-to-cart-btn" onclick="addToCart('Vintage Emerald Droppers', 3400)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing5.jpg') }}" alt="Golden Geo Statement Hoops"></div>
+                    <div class="product-details"><div><h3>Golden Geo Hoops</h3><p>Thick metallic gold-plated statement structural statement loops.</p></div><div><div class="product-price">Rs. 1,950</div><button class="add-to-cart-btn" onclick="addToCart('Golden Geo Hoops', 1950)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing6.jpg') }}" alt="Freshwater Pearl Dangles"></div>
+                    <div class="product-details"><div><h3>Freshwater Pearl Dangles</h3><p>Timeless clean white baroque pearls matching fine silver pins.</p></div><div><div class="product-price">Rs. 2,600</div><button class="add-to-cart-btn" onclick="addToCart('Freshwater Pearl Dangles', 2600)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing7.jpg') }}" alt="Sparkling Cushion Solitaire Drop"></div>
+                    <div class="product-details"><div><h3>Cushion Solitaire Drop</h3><p>High brilliance square stones capturing maximal ambient light.</p></div><div><div class="product-price">Rs. 2,999</div><button class="add-to-cart-btn" onclick="addToCart('Cushion Solitaire Drop', 2999)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing8.jpg') }}" alt="Delicate Leaf Climbers"></div>
+                    <div class="product-details"><div><h3>Leaf Climbers</h3><p>Organic leafy design tracing along the contour of the ear lobe.</p></div><div><div class="product-price">Rs. 1,850</div><button class="add-to-cart-btn" onclick="addToCart('Leaf Climbers', 1850)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing9.jpg') }}" alt="Minimalist Floating Linear Chain"></div>
+                    <div class="product-details"><div><h3>Floating Linear Chain</h3><p>Ultra fine threader chains with small starburst details.</p></div><div><div class="product-price">Rs. 1,600</div><button class="add-to-cart-btn" onclick="addToCart('Floating Linear Chain', 1600)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing10.jpg') }}" alt="Midnight Sapphire Stud Halo"></div>
+                    <div class="product-details"><div><h3>Midnight Sapphire Studs</h3><p>Deep blue sapphire core surrounding by crystal ring accents.</p></div><div><div class="product-price">Rs. 3,150</div><button class="add-to-cart-btn" onclick="addToCart('Midnight Sapphire Studs', 3150)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing11.jpg') }}" alt="Aura Elegant Blossom Clusters"></div>
+                    <div class="product-details"><div><h3>Elegant Blossom Clusters</h3><p>Petal patterns sculpted in premium hypoallergenic alloys.</p></div><div><div class="product-price">Rs. 2,100</div><button class="add-to-cart-btn" onclick="addToCart('Elegant Blossom Clusters', 2100)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing12.jpg') }}" alt="Opulent Festive Jhumka Studs"></div>
+                    <div class="product-details"><div><h3>Opulent Festive Jhumkas</h3><p>Eastern traditional structural accents polished in luxury gold.</p></div><div><div class="product-price">Rs. 4,250</div><button class="add-to-cart-btn" onclick="addToCart('Opulent Festive Jhumkas', 4250)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing13.jpg') }}" alt="Asymmetrical Crescent Moon Hanging"></div>
+                    <div class="product-details"><div><h3>Crescent Moon Hanging</h3><p>Bohemian cosmic charm designs highlighting cubic zirconia lines.</p></div><div><div class="product-price">Rs. 1,799</div><button class="add-to-cart-btn" onclick="addToCart('Crescent Moon Hanging', 1799)">Add To Bag</button></div></div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing14.jpg') }}" alt="Empress Royal Crown Drops"></div>
+                    <div class="product-details"><div><h3>Empress Royal Drops</h3><p>Exquisite statement design for weddings or bridal parties.</p></div><div><div class="product-price">Rs. 3,900</div><button class="add-to-cart-btn" onclick="addToCart('Empress Royal Drops', 3900)">Add To Bag</button></div></div>
+                </div>
+            </div>
+        </div>
+
+        <hr style="border: 0; height: 1px; background: #eee; margin: 50px 0;">
+
+        <section class="info-section" id="about-section">
+            <h2>About Aura</h2>
+            <p>Welcome to Aura, where luxury meets affordability. We believe that fine craftsmanship and stunning jewelry shouldn't be exclusive privileges. Our design house carefully curates and produces premium sterling silver, zircon crystals, and gold-plated statement pieces tailored for modern individuals who appreciate subtle elegance and everyday glamour.</p>
+        </section>
+
+        <hr style="border: 0; height: 1px; background: #eee; margin: 50px 0;">
+
+        <section class="info-section" id="contact-section">
+            <h2>Contact Us</h2>
+            <p>Have questions about sizes, premium custom orders, or shipping timelines across Pakistan? Our concierge support network is active 24/7 to guide you through your luxury purchase experience.</p>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h3>Email Concierge</h3>
+                    <p>support@aurajewelry.com</p>
+                </div>
+                <div class="contact-card">
+                    <h3>WhatsApp Hotline</h3>
+                    <p>+92 300 1234567</p>
+                </div>
+                <div class="contact-card">
+                    <h3>Headquarters</h3>
+                    <p>Aura Premium Retail Tower, Gulberg III, Lahore, Pakistan</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="checkout-modal" id="cartModal">
+        <div class="modal-header">
+            <h2>Your Bag</h2>
+            <button class="close-btn" onclick="toggleCart()">&times;</button>
+        </div>
+        
+        <div class="cart-items-container" id="cartItems"></div>
+        
+        <div class="checkout-summary" id="summaryBox">
+            <div class="total-row">
+                <span>Total Amount:</span>
+                <span id="cartTotal">Rs. 0</span>
+            </div>
+            <button class="place-order-btn" id="checkoutTriggerBtn" onclick="showCheckoutForm()">Proceed to Checkout</button>
+        </div>
+
+        <div class="checkout-form-container" id="checkoutFormBlock">
+            <h3>Shipping Information</h3>
+            <div class="form-group">
+                <label for="custName">Full Name</label>
+                <input type="text" id="custName" placeholder="Enter your complete name" required>
+            </div>
+            <div class="form-group">
+                <label for="custPhone">Phone Number</label>
+                <input type="tel" id="custPhone" placeholder="e.g. 03001234567" required>
+            </div>
+            <div class="form-group">
+                <label for="custAddress">Shipping Address</label>
+                <textarea id="custAddress" rows="3" placeholder="House/Apartment #, Street, Area City name" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Payment Method</label>
+                <div class="cod-badge">
+                    <input type="radio" checked disabled style="width:auto; margin:0;"> 📦 Cash on Delivery (COD)
+                </div>
+            </div>
+            <button class="place-order-btn" onclick="processFinalOrder()" style="background:#111; margin-top:10px;">Confirm & Place Order</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let homeLayoutBackup = "";
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            homeLayoutBackup = document.getElementById('main-storefront').innerHTML;
+        });
+
+        // Smooth Scroll utility helper
+        function scrollToSection(id) {
+            const mainStore = document.getElementById('main-storefront');
+            mainStore.innerHTML = homeLayoutBackup;
+            
+            document.querySelectorAll('.nav-menu button').forEach(btn => btn.classList.remove('active'));
+            const allBtn = document.querySelector(".nav-menu button[onclick*='all']");
+            if(allBtn) allBtn.classList.add('active');
+
+            setTimeout(() => {
+                const element = document.getElementById(id);
+                if(element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+        }
+
+        function filterCategory(category, buttonElement) {
+            document.querySelectorAll('.nav-menu button').forEach(btn => btn.classList.remove('active'));
+            if(buttonElement) buttonElement.classList.add('active');
+
+            const mainStore = document.getElementById('main-storefront');
+
+            if(category === 'all') {
+                mainStore.innerHTML = homeLayoutBackup;
+                return;
+            }
+
+            fetch(`/api/products/${category}`)
+                .then(response => response.json())
+                .then(data => {
+                    let titleText = category.charAt(0).toUpperCase() + category.slice(1) + " Collection";
+                    
+                    if (data && data.length > 0) {
+                        let gridHTML = `<h2 class="section-title">${titleText}</h2><div class="products-grid">`;
+                        data.forEach(product => {
+                            gridHTML += `
+                                <div class="product-card">
+                                    <div class="product-img-box">
+                                        <img src="/static/images/${product.image}" alt="${product.name}">
+                                    </div>
+                                    <div class="product-details">
+                                        <div>
+                                            <h3>${product.name}</h3>
+                                            <p>${product.description}</p>
+                                        </div>
+                                        <div>
+                                            <div class="product-price">Rs. ${product.price.toLocaleString()}</div>
+                                            <button class="add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price})">Add To Bag</button>
+                                        </div>
+                                    </div>
+                                </div>`;
+                        });
+                        gridHTML += `</div>`;
+                        mainStore.innerHTML = gridHTML;
+                    } else {
+                        runStaticFallback(category, mainStore, titleText);
+                    }
+                })
+                .catch(err => {
+                    let titleText = category.charAt(0).toUpperCase() + category.slice(1) + " Collection";
+                    runStaticFallback(category, mainStore, titleText);
+                });
+        }
+
+        function runStaticFallback(category, mainStore, titleText) {
+            mainStore.innerHTML = homeLayoutBackup;
+            const pendants = document.getElementById('pendants-section');
+            const rings = document.getElementById('rings-section');
+            const bracelets = document.getElementById('bracelets-section');
+            const earrings = document.getElementById('earrings-section');
+            const dividers = mainStore.querySelectorAll('.section-divider');
+
+            dividers.forEach(d => d.remove());
+
+            if(category === 'pendants') {
+                if(rings) rings.remove();
+                if(bracelets) bracelets.remove();
+                if(earrings) earrings.remove();
+            } else if(category === 'rings') {
+                if(pendants) pendants.remove();
+                if(bracelets) bracelets.remove();
+                if(earrings) earrings.remove();
+            } else if(category === 'bracelets') {
+                if(pendants) pendants.remove();
+                if(rings) rings.remove();
+                if(earrings) earrings.remove();
+            } else if(category === 'earrings') {
+                if(pendants) pendants.remove();
+                if(rings) rings.remove();
+                if(bracelets) bracelets.remove();
+            } else {
+                mainStore.innerHTML = `<h2 class="section-title">${titleText}</h2><p style="text-align:center; padding: 40px; color:#666;">More luxury stock arriving shortly in this block!</p>`;
+            }
+        }
+
+        function toggleCart() {
+            document.getElementById('cartModal').classList.toggle('active');
+            // Hide checkout form whenever cart opens or closes to keep it fresh
+            document.getElementById('checkoutFormBlock').style.display = 'none';
+            document.getElementById('checkoutTriggerBtn').style.display = 'block';
+        }
+
+        function addToCart(name, price) {
+            cart.push({name, price});
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const itemsContainer = document.getElementById('cartItems');
+            itemsContainer.innerHTML = '';
+            
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                itemsContainer.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <h4>${item.name}</h4>
+                            <small style="color: #D4AF37;">Rs. ${item.price.toLocaleString()}</small>
+                        </div>
+                        <button onclick="removeFromCart(${index})" style="background:none; border:none; color:#ba1a1a; cursor:pointer; font-size:11px; text-transform:uppercase;">Remove</button>
+                    </div>`;
+            });
+            document.getElementById('cartTotal').innerText = `Rs. ${total.toLocaleString()}`;
+            
+            // If cart becomes empty, hide checkout form
+            if (cart.length === 0) {
+                document.getElementById('checkoutFormBlock').style.display = 'none';
+                document.getElementById('checkoutTriggerBtn').style.display = 'block';
+            }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        // Action 1: Triggers display of Shipping Fields
+        function showCheckoutForm() {
+            if(cart.length === 0) {
+                alert("Your shopping bag is currently empty.");
+                return;
+            }
+            document.getElementById('checkoutFormBlock').style.display = 'block';
+            document.getElementById('checkoutTriggerBtn').style.display = 'none';
+            
+            // Scroll down automatically to the form input fields
+            document.getElementById('checkoutFormBlock').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Action 2: Processes fields and validates details
+        function processFinalOrder() {
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+
+            if (!name || !phone || !address) {
+                alert("Please fill in all the shipping fields to proceed with your order.");
+                return;
+            }
+
+            // High profile completion feedback
+            alert(`🎉 Congratulations ${name}!\n\nYour order has been placed successfully via Cash on Delivery!\nOur team will contact you soon on ${phone}.\n\nThank you for choosing AURA.`);
+            
+            // Clear checkout form variables
+            document.getElementById('custName').value = '';
+            document.getElementById('custPhone').value = '';
+            document.getElementById('custAddress').value = '';
+            
+            // Reset shopping bag arrays entirely
+            cart = [];
+            updateCartUI();
+            toggleCart();
+        }
+    </script>
+</body>
+</html>
