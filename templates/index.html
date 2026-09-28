@@ -371,10 +371,6 @@
                     <div class="product-details"><div><h3>Elegant Blossom Clusters</h3><p>Petal patterns sculpted in premium hypoallergenic alloys.</p></div><div><div class="product-price">Rs. 2,100</div><button class="add-to-cart-btn" onclick="addToCart('Elegant Blossom Clusters', 2100)">Add To Bag</button></div></div>
                 </div>
                 <div class="product-card">
-                    <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing12.jpg') }}" alt="Opulent Festive Jhumka Studs"></div>
-                    <div class="product-details"><div><h3>Opulent Festive Jhumkas</h3><p>Eastern traditional structural accents polished in luxury gold.</p></div><div><div class="product-price">Rs. 4,250</div><button class="add-to-cart-btn" onclick="addToCart('Opulent Festive Jhumkas', 4250)">Add To Bag</button></div></div>
-                </div>
-                <div class="product-card">
                     <div class="product-img-box"><img src="{{ url_for('static', filename='images/collection/earing13.jpg') }}" alt="Asymmetrical Crescent Moon Hanging"></div>
                     <div class="product-details"><div><h3>Crescent Moon Hanging</h3><p>Bohemian cosmic charm designs highlighting cubic zirconia lines.</p></div><div><div class="product-price">Rs. 1,799</div><button class="add-to-cart-btn" onclick="addToCart('Crescent Moon Hanging', 1799)">Add To Bag</button></div></div>
                 </div>
@@ -589,8 +585,7 @@
                     </div>`;
             });
             document.getElementById('cartTotal').innerText = `Rs. ${total.toLocaleString()}`;
-            
-            // If cart becomes empty, hide checkout form
+           
             if (cart.length === 0) {
                 document.getElementById('checkoutFormBlock').style.display = 'none';
                 document.getElementById('checkoutTriggerBtn').style.display = 'block';
@@ -602,7 +597,7 @@
             updateCartUI();
         }
 
-        // Action 1: Triggers display of Shipping Fields
+       
         function showCheckoutForm() {
             if(cart.length === 0) {
                 alert("Your shopping bag is currently empty.");
@@ -611,11 +606,10 @@
             document.getElementById('checkoutFormBlock').style.display = 'block';
             document.getElementById('checkoutTriggerBtn').style.display = 'none';
             
-            // Scroll down automatically to the form input fields
             document.getElementById('checkoutFormBlock').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Action 2: Processes fields and validates details
+        
         function processFinalOrder() {
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
@@ -628,13 +622,12 @@
 
             // High profile completion feedback
             alert(`🎉 Congratulations ${name}!\n\nYour order has been placed successfully via Cash on Delivery!\nOur team will contact you soon on ${phone}.\n\nThank you for choosing AURA.`);
-            
-            // Clear checkout form variables
+           
             document.getElementById('custName').value = '';
             document.getElementById('custPhone').value = '';
             document.getElementById('custAddress').value = '';
             
-            // Reset shopping bag arrays entirely
+            
             cart = [];
             updateCartUI();
             toggleCart();
